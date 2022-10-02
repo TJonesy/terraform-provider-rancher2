@@ -148,6 +148,8 @@ func resourceRancher2NodeTemplateUpdate(d *schema.ResourceData, meta interface{}
 		update["openstackConfig"] = expandOpenstackConfig(d.Get("openstack_config").([]interface{}))
 	case opennebulaConfigDriver:
 		update["opennebulaConfig"] = expandOpennebulaConfig(d.Get("opennebula_config").([]interface{}))
+	case proxmoxveConfigDriver:
+		update["proxmoxveConfig"] = expandProxmoxveConfig(d.Get("proxmoxve_config").([]interface{}))
 	case vmwarevsphereConfigDriver:
 		update["vmwarevsphereConfig"] = expandVsphereConfig(d.Get("vsphere_config").([]interface{}))
 	case outscaleConfigDriver:

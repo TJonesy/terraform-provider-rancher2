@@ -17,6 +17,7 @@ type NodeTemplate struct {
 	LinodeConfig        *linodeConfig        `json:"linodeConfig,omitempty" yaml:"linodeConfig,omitempty"`
 	OpennebulaConfig    *opennebulaConfig    `json:"opennebulaConfig,omitempty" yaml:"opennebulaConfig,omitempty"`
 	OpenstackConfig     *openstackConfig     `json:"openstackConfig,omitempty" yaml:"openstackConfig,omitempty"`
+	ProxmoxveConfig     *proxmoxveConfig     `json:"proxmoxveConfig,omitempty" yaml:"proxmoxveConfig,omitempty"`
 	VmwarevsphereConfig *vmwarevsphereConfig `json:"vmwarevsphereConfig,omitempty" yaml:"vmwarevsphereConfig,omitempty"`
 	OutscaleConfig      *outscaleConfig      `json:"outscaleConfig,omitempty" yaml:"outscaleConfig,omitempty"`
 }
@@ -32,6 +33,7 @@ var allNodeTemplateDriverConfigFields = []string{
 	"linode_config",
 	"opennebula_config",
 	"openstack_config",
+	"proxmoxve_config",
 	"vsphere_config",
 	"outscale_config"}
 
@@ -199,6 +201,15 @@ func nodeTemplateFields() map[string]*schema.Schema {
 			ConflictsWith: getConflicts(allNodeTemplateDriverConfigFields, "outscale_config"),
 			Elem: &schema.Resource{
 				Schema: outscaleConfigFields(),
+			},
+		},
+		"proxmoxve_config": {
+			Type:          schema.TypeList,
+			MaxItems:      1,
+			Optional:      true,
+			ConflictsWith: getConflicts(allNodeTemplateDriverConfigFields, "proxmoxve_config"),
+			Elem: &schema.Resource{
+				Schema: proxmoxveConfigFields(),
 			},
 		},
 		"use_internal_ip_address": {

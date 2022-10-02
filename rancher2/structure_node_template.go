@@ -58,6 +58,10 @@ func flattenNodeTemplate(d *schema.ResourceData, in *NodeTemplate) error {
 		if in.OutscaleConfig == nil {
 			return fmt.Errorf("[ERROR] Node template driver %s requires outscale_config", in.Driver)
 		}
+	case proxmoxveConfigDriver:
+		if in.ProxmoxveConfig == nil {
+			return fmt.Errorf("[ERROR] Node template driver %s requires proxmoxve_config", in.Driver)
+		}
 	default:
 		return fmt.Errorf("[ERROR] Unsupported driver on node template: %s", in.Driver)
 	}
@@ -245,6 +249,11 @@ func expandNodeTemplate(in *schema.ResourceData) *NodeTemplate {
 	if v, ok := in.Get("harvester_config").([]interface{}); ok && len(v) > 0 {
 		obj.HarvesterConfig = expandHarvestercloudConfig(v)
 		obj.Driver = harvesterConfigDriver
+	}
+
+	if v, ok := in.Get("proxmoxve_config").([]interface{}); ok && len(v) > 0 {
+		obj.ProxmoxveConfig = expandProxmoxveConfig(v)
+		obj.Driver = outscaleConfigDriver
 	}
 
 	if v, ok := in.Get("use_internal_ip_address").(bool); ok {
