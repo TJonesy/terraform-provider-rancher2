@@ -2,6 +2,7 @@ package rancher2
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"time"
@@ -94,7 +95,8 @@ func resourceRancher2NodeTemplateRead(d *schema.ResourceData, meta interface{}) 
 		}
 		return err
 	}
-
+	b, err := json.MarshalIndent(nodeTemplate, "", "  ")
+	log.Printf("[TRACE] Node Template: %s", b)
 	return flattenNodeTemplate(d, nodeTemplate)
 }
 

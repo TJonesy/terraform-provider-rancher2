@@ -1,7 +1,9 @@
 package rancher2
 
 import (
+	"encoding/json"
 	"fmt"
+	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
@@ -62,6 +64,7 @@ func flattenNodeTemplate(d *schema.ResourceData, in *NodeTemplate) error {
 		if in.ProxmoxveConfig == nil {
 			return fmt.Errorf("[ERROR] Node template driver %s requires proxmoxve_config", in.Driver)
 		}
+		d.Set("proxmoxve_config", flattenProxmoxveConfig(in.ProxmoxveConfig))
 	default:
 		return fmt.Errorf("[ERROR] Unsupported driver on node template: %s", in.Driver)
 	}
@@ -141,6 +144,9 @@ func flattenNodeTemplate(d *schema.ResourceData, in *NodeTemplate) error {
 	if err != nil {
 		return err
 	}
+
+	b, err := json.MarshalIndent(d, "", "  ")
+	log.Printf("[TRACE] Node Template D: %s", b)
 
 	return nil
 }
@@ -253,7 +259,7 @@ func expandNodeTemplate(in *schema.ResourceData) *NodeTemplate {
 
 	if v, ok := in.Get("proxmoxve_config").([]interface{}); ok && len(v) > 0 {
 		obj.ProxmoxveConfig = expandProxmoxveConfig(v)
-		obj.Driver = outscaleConfigDriver
+		obj.Driver = proxmoxveConfigDriver
 	}
 
 	if v, ok := in.Get("use_internal_ip_address").(bool); ok {
