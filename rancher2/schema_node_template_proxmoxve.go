@@ -23,7 +23,7 @@ type proxmoxveConfig struct {
 	StorageType       string `json:"vmStorageType,omitempty" yaml:"vmStorageType,omitempty"`
 	StorageSize       string `json:"vmStorageSize,omitempty" yaml:"vmStorageSize,omitempty"`
 	Memory            string `json:"vmMemory,omitempty" yaml:"vmMemory,omitempty"`
-	Onboot            string `json:"vmStartOnBoot,omitempty" yaml:"vmStartOnBoot,omitempty"`
+	StartOnBoot       string `json:"vmStartOnboot,omitempty" yaml:"vmStartOnboot,omitempty"`
 	Protection        string `json:"vmProtection,omitempty" yaml:"vmProtection,omitempty"`
 	Citype            string `json:"vmCitype,omitempty" yaml:"vmCitype,omitempty"`
 	NUMA              string `json:"vmNuma,omitempty" yaml:"vmNuma,omitempty"`
@@ -115,7 +115,7 @@ func proxmoxveConfigFields() map[string]*schema.Schema {
 			Optional:    true,
 			Description: "Memory GB",
 		},
-		"onboot": {
+		"start_on_boot": {
 			Type:        schema.TypeString,
 			Optional:    true,
 			Description: "Specifies whether a VM will be started during system bootup.",

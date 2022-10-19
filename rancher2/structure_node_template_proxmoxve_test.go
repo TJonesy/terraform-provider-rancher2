@@ -2,10 +2,11 @@ package rancher2
 
 import (
 	"encoding/json"
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
-	managementClient "github.com/rancher/rancher/pkg/client/generated/management/v3"
 	"reflect"
 	"testing"
+
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	managementClient "github.com/rancher/rancher/pkg/client/generated/management/v3"
 )
 
 var (
@@ -48,7 +49,7 @@ func init() {
 		StorageType:       "StorageType",
 		StorageSize:       "StorageSize",
 		Memory:            "Memory",
-		Onboot:            "Onboot",
+		StartOnBoot:       "OnBoot",
 		Protection:        "Protection",
 		Citype:            "Citype",
 		NUMA:              "1",
@@ -85,7 +86,7 @@ func init() {
 		"storage_type":       "StorageType",
 		"storage_size":       "StorageSize",
 		"memory":             "Memory",
-		"onboot":             "Onboot",
+		"start_on_boot":      "OnBoot",
 		"protection":         "Protection",
 		"citype":             "Citype",
 		"numa":               "1",

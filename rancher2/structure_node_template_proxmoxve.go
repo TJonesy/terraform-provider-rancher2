@@ -1,14 +1,16 @@
 package rancher2
 
-import "log"
-import "encoding/json"
+import (
+	"encoding/json"
+	"log"
+)
 
 // Flatteners
 
 func flattenProxmoxveConfig(in *proxmoxveConfig) []interface{} {
 
-	in_pretty, _ := json.MarshalIndent(in, "", " ")
-	log.Printf("[TRACE] flattenProxmoxveConfig IN: %s", in_pretty)
+	inPretty, _ := json.MarshalIndent(in, "", " ")
+	log.Printf("[TRACE] flattenProxmoxveConfig IN: %s", inPretty)
 	obj := make(map[string]interface{})
 	if in == nil {
 		return []interface{}{}
@@ -43,8 +45,8 @@ func flattenProxmoxveConfig(in *proxmoxveConfig) []interface{} {
 	if len(in.Memory) > 0 {
 		obj["memory"] = in.Memory
 	}
-	if len(in.Onboot) > 0 {
-		obj["onboot"] = in.Onboot
+	if len(in.StartOnBoot) > 0 {
+		obj["start_on_boot"] = in.StartOnBoot
 	}
 	if len(in.Protection) > 0 {
 		obj["protection"] = in.Protection
@@ -109,8 +111,8 @@ func flattenProxmoxveConfig(in *proxmoxveConfig) []interface{} {
 	obj["driver_debug"] = in.DriverDebug
 	obj["resty_debug"] = in.RestyDebug
 
-	obj_pretty, _ := json.MarshalIndent(obj, "", " ")
-	log.Printf("[TRACE] flattenProxmoxveConfig OBJ: %s", obj_pretty)
+	objPretty, _ := json.MarshalIndent(obj, "", " ")
+	log.Printf("[TRACE] flattenProxmoxveConfig OBJ: %s", objPretty)
 
 	return []interface{}{obj}
 }
@@ -124,8 +126,8 @@ func expandProxmoxveConfig(p []interface{}) *proxmoxveConfig {
 	}
 	in := p[0].(map[string]interface{})
 
-	in_pretty, _ := json.MarshalIndent(in, "", " ")
-	log.Printf("[TRACE] expandProxmoxveConfig IN: %s", in_pretty)
+	inPretty, _ := json.MarshalIndent(in, "", " ")
+	log.Printf("[TRACE] expandProxmoxveConfig IN: %s", inPretty)
 
 	if v, ok := in["provision_strategy"].(string); ok {
 		obj.ProvisionStrategy = v
@@ -189,8 +191,8 @@ func expandProxmoxveConfig(p []interface{}) *proxmoxveConfig {
 		obj.GuestPassword = v
 	}
 
-	if v, ok := in["onboot"].(string); ok {
-		obj.Onboot = v
+	if v, ok := in["start_on_boot"].(string); ok {
+		obj.StartOnBoot = v
 	}
 
 	if v, ok := in["protection"].(string); ok {
@@ -248,8 +250,8 @@ func expandProxmoxveConfig(p []interface{}) *proxmoxveConfig {
 		obj.CPUCores = v
 	}
 
-	obj_pretty, _ := json.MarshalIndent(obj, "", " ")
-	log.Printf("[TRACE] expandProxmoxveConfig OBJ: %s", obj_pretty)
+	objPretty, _ := json.MarshalIndent(obj, "", " ")
+	log.Printf("[TRACE] expandProxmoxveConfig OBJ: %s", objPretty)
 
 	return obj
 }
